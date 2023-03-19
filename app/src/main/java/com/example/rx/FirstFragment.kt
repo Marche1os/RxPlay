@@ -2,21 +2,18 @@ package com.example.rx
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
 import com.example.rx.databinding.FragmentFirstBinding
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.ObservableEmitter
-import io.reactivex.rxjava3.core.ObservableOnSubscribe
 import io.reactivex.rxjava3.core.Observer
-import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import rx_api.RxApi
+import rx_api.createObservable
+import rx_api.schedule
 import java.util.concurrent.TimeUnit
 
 /**
@@ -51,7 +48,7 @@ class FirstFragment : Fragment() {
     }
 
     fun init() {
-        val observable: Observable<Int> = RxApi.createObservable { emitter ->
+        val observable: Observable<Int> = createObservable { emitter ->
             var i = 0
             while (i++ < 100) {
                 emitter.onNext(i)
@@ -59,18 +56,15 @@ class FirstFragment : Fragment() {
             }
         }
 
-        val disposable = observable
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { onNext ->
-                    binding.textviewFirst.text = onNext.toString()
+        linksToTask.add(
+            observable.schedule(
+                onNext = { nextValue ->
+                    binding.textviewFirst.text = nextValue.toString()
                 },
-                { error ->
-                    Log.e("LOG_TAG", "error: $error")
-                }
-            )
-        linksToTask.add(disposable)
+                onError = { error ->
+                    Log.e("LOG_TAG", "error:$error")
+                })
+        )
     }
 
     fun start() {
