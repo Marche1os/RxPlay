@@ -49,7 +49,19 @@ class FirstFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonFirst.setOnClickListener {
-            takeUntil()
+            binding.textviewFirst.text = null
+        }
+        createClickListeners()
+    }
+
+    private fun createClickListeners() {
+        with(binding) {
+            takeUntilBtn.setOnClickListener { takeUntil() }
+            zipBtn.setOnClickListener { zip() }
+            mergeBtn.setOnClickListener { merge() }
+            bufferBtn.setOnClickListener { buffer() }
+            mapBtn.setOnClickListener { map() }
+            fromCallableBtn.setOnClickListener { fromCallable() }
         }
     }
 
@@ -132,26 +144,6 @@ class FirstFragment : Fragment() {
             )
     }
 
-    fun simpleObservable() {
-        val observable: Observable<Int> = createObservable { emitter ->
-            var i = 0
-            while (i++ < 100) {
-                emitter.onNext(i)
-                TimeUnit.SECONDS.sleep(2)
-            }
-        }
-
-        linksToTask.add(
-            observable.schedule(
-                onNext = { nextValue ->
-                    binding.textviewFirst.text = nextValue.toString()
-                },
-                onError = { error ->
-                    Log.e("LOG_TAG", "error:$error")
-                })
-        )
-    }
-
     fun map() {
         val observable: Observable<String> = createObservable { emitter ->
             val currentDay = Calendar.getInstance().getDisplayName(
@@ -176,30 +168,6 @@ class FirstFragment : Fragment() {
 
     private fun logError(error: Throwable) {
         Log.e("LOG_TAG", "error: $error")
-    }
-
-    fun start() {
-        val observable = Observable.fromIterable(listOf("one", "two", "three"))
-        val observer = object : Observer<String> {
-            override fun onSubscribe(d: Disposable) {
-
-            }
-
-            override fun onError(e: Throwable) {
-                Log.d("LOG_TAG", "onError:$e")
-            }
-
-            override fun onComplete() {
-                Log.d("LOG_TAG", "onComplete")
-            }
-
-            override fun onNext(t: String) {
-                Log.d("LOG_TAG", "onNext: $t")
-            }
-        }
-
-
-        observable.subscribe(observer)
     }
 
     private fun range() {

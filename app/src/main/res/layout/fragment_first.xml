@@ -26,10 +26,66 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            tools:text="@string/lorem_ipsum"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_first" />
+            app:layout_constraintTop_toBottomOf="@id/button_first"
+            tools:text="output" />
+
+        <TableLayout
+            android:id="@+id/buttonsContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_first">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/takeUntilBtn"
+                android:layout_width="wrap_content"
+                android:text="takeUntil"
+                android:layout_marginEnd="8dp"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/zipBtn"
+                android:layout_width="wrap_content"
+                android:text="zip"
+                android:layout_marginEnd="8dp"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mergeBtn"
+                android:layout_width="wrap_content"
+                android:text="merge"
+                android:layout_marginEnd="8dp"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bufferBtn"
+                android:layout_width="wrap_content"
+                android:text="buffer"
+                android:layout_marginEnd="8dp"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mapBtn"
+                android:layout_width="wrap_content"
+                android:text="map"
+                android:layout_marginEnd="8dp"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fromCallableBtn"
+                android:layout_width="wrap_content"
+                android:text="fromCallable"
+                android:layout_marginEnd="8dp"
+                android:layout_height="wrap_content"/>
+
+        </TableLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
