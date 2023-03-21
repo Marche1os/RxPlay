@@ -1,6 +1,8 @@
 package com.example.rx
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +12,10 @@ import com.example.rx.databinding.FragmentFirstBinding
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Observer
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.functions.Predicate
+import io.reactivex.rxjava3.observables.ConnectableObservable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import rx_api.createMergedObservables
 import rx_api.createObservable
@@ -33,7 +37,7 @@ class FirstFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private val linksToTask = mutableListOf<Disposable>()
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,7 +66,123 @@ class FirstFragment : Fragment() {
             bufferBtn.setOnClickListener { buffer() }
             mapBtn.setOnClickListener { map() }
             fromCallableBtn.setOnClickListener { fromCallable() }
+            intervalBtn.setOnClickListener { interval() }
+            twoObservablesBtn.setOnClickListener { createTwoColdObservables() }
+            twoObservablesHotBtn.setOnClickListener { createTwoHotObservables() }
+            replayBtn.setOnClickListener { replay() }
+            refCountBtn.setOnClickListener { refCount() }
+            cacheBtn.setOnClickListener { cache() }
         }
+    }
+
+    private fun cache() {
+        val observer1 = createObserver<Long>()
+
+        val observer2 = createObserver<Long>(
+            onNext = { nextValue ->
+                Log.d("LOG_TAG", "onNext2 => $nextValue")
+            }
+        )
+
+        val connectableObservable = Observable.interval(1, TimeUnit.SECONDS)
+            .take(8)
+            .cache()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            connectableObservable.subscribe(observer1)
+        }, 2000)
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            connectableObservable.subscribe(observer2)
+        }, 4500)
+    }
+
+
+    private fun refCount() {
+        val observer1 = createObserver<Long>()
+
+        val observer2 = createObserver<Long>(
+            onNext = { nextValue ->
+                Log.d("LOG_TAG", "onNext2 => $nextValue")
+            }
+        )
+
+        val connectableObservable = Observable.interval(1, TimeUnit.SECONDS)
+            .take(8)
+            .publish()
+            .refCount(1)
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            connectableObservable.subscribe(observer1)
+        }, 2000)
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            connectableObservable.subscribe(observer2)
+        }, 4500)
+    }
+
+    private fun replay() {
+        val observer1 = createObserver<Long>()
+
+        val observer2 = createObserver<Long>(
+            onNext = { nextValue ->
+                Log.d("LOG_TAG", "onNext2 => $nextValue")
+            }
+        )
+
+        val connectableObservable: ConnectableObservable<Long> =
+            Observable.interval(1, TimeUnit.SECONDS)
+                .take(8)
+                .replay()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            connectableObservable.subscribe(observer1)
+            connectableObservable.connect()
+        }, 3000)
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            connectableObservable.subscribe(observer2)
+        }, 7000)
+    }
+
+    private fun createTwoHotObservables() {
+        val observer1 = createObserver<Long>()
+
+        val observer2 = createObserver<Long>(
+            onNext = { nextVal ->
+                Log.d("LOG_TAG", "onNext2 => $nextVal")
+            }
+        )
+
+        val connectableObservable: ConnectableObservable<Long> =
+            Observable.interval(1, TimeUnit.SECONDS)
+                .take(8)
+                .publish()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            connectableObservable.subscribe(observer1)
+            connectableObservable.connect()
+        }, 3000)
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            connectableObservable.subscribe(observer2)
+        }, 7000)
+    }
+
+    private fun createTwoColdObservables() {
+        val observable1 = Observable.interval(1, TimeUnit.SECONDS)
+            .take(5)
+
+        val observer1 = createObserver<Long>()
+        val observer2 = createObserver<Long>()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            observable1.subscribe(observer1)
+        }, 3000)
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            observable1.subscribe(observer2)
+        }, 7000)
     }
 
     fun takeUntil() {
@@ -163,7 +283,7 @@ class FirstFragment : Fragment() {
             onError = ::logError
         )
 
-        linksToTask.add(disposable)
+        compositeDisposable.add(disposable)
     }
 
     private fun logError(error: Throwable) {
@@ -172,44 +292,26 @@ class FirstFragment : Fragment() {
 
     private fun range() {
         val observable = Observable.range(10, 4)
-        val observer = object : Observer<Int> {
-            override fun onSubscribe(d: Disposable) {
-                Log.d("LOG_TAG", "onSubscribe")
-            }
-
-            override fun onError(e: Throwable) {
-                Log.d("LOG_TAG", "onError:$e")
-            }
-
-            override fun onComplete() {
-            }
-
-            override fun onNext(t: Int) {
-                Log.d("LOG_TAG", "onNext: $t")
-            }
-        }
+        val observer = createObserver<Int>()
         observable.subscribe(observer)
     }
 
     private fun interval() {
         val observable = Observable.interval(500, TimeUnit.MILLISECONDS)
-        val observer = object : Observer<Long> {
-            override fun onSubscribe(d: Disposable) {
-                Log.d("LOG_TAG", "onSubscribe")
+        val disposable = observable.schedule(
+            onError = ::logError,
+            onNext = { item ->
+                binding.textviewFirst.apply {
+                    text = "$text $item"
+                }
             }
+        )
 
-            override fun onError(e: Throwable) {
-                Log.d("LOG_TAG", "onError:$e")
-            }
-
-            override fun onComplete() {
-            }
-
-            override fun onNext(t: Long) {
-                Log.d("LOG_TAG", "onNext: $t")
-            }
-        }
-        observable.subscribe(observer)
+        activity?.window?.decorView?.postDelayed(
+            {
+                disposable.dispose()
+            }, 4500
+        )
     }
 
     private fun fromCallable() {
@@ -227,7 +329,33 @@ class FirstFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        linksToTask.forEach { action -> action.dispose() }
+        compositeDisposable.dispose()
+        compositeDisposable.clear()
         _binding = null
+    }
+}
+
+fun <T : Any> createObserver(
+    onSubscribe: ((d: Disposable) -> Unit)? = null,
+    onNext: ((t: T) -> Unit)? = null,
+    onError: ((e: Throwable) -> Unit)? = null,
+    onComplete: (() -> Unit)? = null,
+): Observer<T> {
+    return object : Observer<T> {
+        override fun onSubscribe(d: Disposable) {
+            onSubscribe?.invoke(d) ?: Log.d("LOG_TAG", "onSubscribe")
+        }
+
+        override fun onNext(t: T) {
+            onNext?.invoke(t) ?: Log.d("LOG_TAG", "onNext => $t")
+        }
+
+        override fun onError(e: Throwable) {
+            onError?.invoke(e) ?: Log.d("LOG_TAG", "onError => $e")
+        }
+
+        override fun onComplete() {
+            onComplete?.invoke() ?: Log.d("LOG_TAG", "onComplete")
+        }
     }
 }
