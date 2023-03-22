@@ -21,6 +21,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <Button
+            android:id="@+id/button_navigate"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:text="toSubjectPage"
+            app:layout_constraintBottom_toBottomOf="@id/button_first"
+            app:layout_constraintStart_toEndOf="@id/button_first"
+            app:layout_constraintTop_toTopOf="@id/button_first" />
+
         <TextView
             android:id="@+id/textview_first"
             android:layout_width="wrap_content"
@@ -45,88 +55,88 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/cacheBtn"
                 android:layout_width="wrap_content"
-                android:text="cache"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_height="wrap_content"/>
+                android:text="cache" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/refCountBtn"
                 android:layout_width="wrap_content"
-                android:text="refCount"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_height="wrap_content"/>
+                android:text="refCount" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/replayBtn"
                 android:layout_width="wrap_content"
-                android:text="replay"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_height="wrap_content"/>
+                android:text="replay" />
 
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/twoObservablesBtn"
                 android:layout_width="wrap_content"
-                android:text="twoColdObservables"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_height="wrap_content"/>
+                android:text="twoColdObservables" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/twoObservablesHotBtn"
                 android:layout_width="wrap_content"
-                android:text="twoHotObservables"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_height="wrap_content"/>
+                android:text="twoHotObservables" />
 
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/takeUntilBtn"
                 android:layout_width="wrap_content"
-                android:text="takeUntil"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_height="wrap_content"/>
+                android:text="takeUntil" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/zipBtn"
                 android:layout_width="wrap_content"
-                android:text="zip"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_height="wrap_content"/>
+                android:text="zip" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/mergeBtn"
                 android:layout_width="wrap_content"
-                android:text="merge"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_height="wrap_content"/>
+                android:text="merge" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bufferBtn"
                 android:layout_width="wrap_content"
-                android:text="buffer"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_height="wrap_content"/>
+                android:text="buffer" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/mapBtn"
                 android:layout_width="wrap_content"
-                android:text="map"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_height="wrap_content"/>
+                android:text="map" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/fromCallableBtn"
                 android:layout_width="wrap_content"
-                android:text="fromCallable"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_height="wrap_content"/>
+                android:text="fromCallable" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/intervalBtn"
                 android:layout_width="wrap_content"
-                android:text="interval"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_height="wrap_content"/>
+                android:text="interval" />
 
         </TableLayout>
 

@@ -26,10 +26,63 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/lorem_ipsum"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button_second" />
+
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textview_second">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/publishSubjectBtn"
+                android:layout_width="wrap_content"
+                android:text="publishSubject"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/replay_subject_btn"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="replaySubject"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/behaviorSubjectBtn"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="behaviorSubject"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/asyncSubjectBtn"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="asyncSubject"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/unicastSubjectBtn"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="unicastSubject"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/serializedSubjectBtn"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="serializedSubject"
+                android:layout_height="wrap_content"/>
+\
+
+        </TableLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

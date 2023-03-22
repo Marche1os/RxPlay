@@ -7,7 +7,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.NavUtils
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.rx.databinding.FragmentFirstBinding
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
@@ -60,6 +62,10 @@ class FirstFragment : Fragment() {
 
     private fun createClickListeners() {
         with(binding) {
+            buttonNavigate.setOnClickListener {
+                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+            }
+
             takeUntilBtn.setOnClickListener { takeUntil() }
             zipBtn.setOnClickListener { zip() }
             mergeBtn.setOnClickListener { merge() }
