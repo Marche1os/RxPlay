@@ -253,10 +253,6 @@ class SecondFragment : Fragment() {
         return Pair(first = firstObserver, second = secondObserver)
     }
 
-    private fun logOnNext(source: String = "1", value: Any) {
-        Log.d("LOG_TAG", "$source => $value")
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -265,4 +261,8 @@ class SecondFragment : Fragment() {
 
 fun Fragment.postDelayed(r: Runnable, delayMs: Long) {
     requireActivity().window.decorView.postDelayed(r, delayMs)
+}
+
+fun logOnNext(source: String = "1", value: Any) {
+    Log.d("LOG_TAG", "$source => $value")
 }
