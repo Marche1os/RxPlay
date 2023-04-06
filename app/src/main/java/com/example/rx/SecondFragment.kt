@@ -266,3 +266,7 @@ fun Fragment.postDelayed(r: Runnable, delayMs: Long) {
 fun logOnNext(source: String = "1", value: Any) {
     Log.d("LOG_TAG", "$source => $value")
 }
+
+fun logError(error: Throwable) {
+    Log.e("LOG_TAG", "error: $error")
+}

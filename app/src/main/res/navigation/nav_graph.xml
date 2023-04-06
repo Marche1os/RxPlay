@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_FirstFragment_to_thirdFragment"
             app:destination="@id/thirdFragment" />
+        <action
+            android:id="@+id/action_FirstFragment_to_mergeFragment"
+            app:destination="@id/mergeFragment" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
@@ -35,6 +38,15 @@
         tools:layout="@layout/fragment_third" >
         <action
             android:id="@+id/action_thirdFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mergeFragment"
+        android:name="com.example.rx.MergeFragment"
+        android:label="fragment_merge"
+        tools:layout="@layout/fragment_merge" >
+        <action
+            android:id="@+id/action_mergeFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
     </fragment>
 </navigation>

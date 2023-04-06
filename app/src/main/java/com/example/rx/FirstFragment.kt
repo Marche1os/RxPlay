@@ -68,6 +68,9 @@ class FirstFragment : Fragment() {
             toErrorsPageBtn.setOnClickListener {
                 findNavController().navigate(R.id.action_FirstFragment_to_thirdFragment)
             }
+            toMergeOperators.setOnClickListener {
+                findNavController().navigate(R.id.action_FirstFragment_to_mergeFragment)
+            }
 
             takeUntilBtn.setOnClickListener { takeUntil() }
             zipBtn.setOnClickListener { zip() }

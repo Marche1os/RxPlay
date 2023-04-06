@@ -11,31 +11,37 @@
         android:layout_height="match_parent"
         android:padding="16dp">
 
-        <Button
-            android:id="@+id/button_first"
-            android:layout_width="wrap_content"
+        <GridLayout
+            android:id="@+id/operators_layout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Очистить текст"
+            android:columnCount="4"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/button_navigate"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:text="Операторы Subjects"
-            app:layout_constraintBottom_toBottomOf="@id/button_first"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/button_first" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:id="@+id/toErrorsPageBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Обработка ошибок"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_navigate" />
+            <Button
+                android:id="@+id/button_first"
+                android:layout_column="3"
+                android:text="Очистить текст" />
+
+            <Button
+                android:id="@+id/button_navigate"
+                android:layout_column="1"
+                android:text="Операторы Subjects" />
+
+            <Button
+                android:id="@+id/toErrorsPageBtn"
+                android:layout_column="1"
+                android:text="Обработка ошибок" />
+
+            <Button
+                android:id="@+id/toMergeOperators"
+                android:layout_column="1"
+                android:text="Операторы объединения" />
+
+        </GridLayout>
 
         <TextView
             android:id="@+id/textview_first"
@@ -44,7 +50,7 @@
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toErrorsPageBtn"
+            app:layout_constraintTop_toBottomOf="@id/operators_layout"
             tools:text="Базовые операторы" />
 
         <TableLayout
